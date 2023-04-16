@@ -1,0 +1,12 @@
+youtube data api v3 
+api key - AIzaSyBsjEut9or5HdBM5c3zz47iwijZiwn5Yn4
+
+{
+  "Insert API Key": {
+    "prefix": "myapi",
+    "body": [
+      "AIzaSyBsjEut9or5HdBM5c3zz47iwijZiwn5Yn4"
+    ],
+    "description": "Insert API key"
+  }
+}

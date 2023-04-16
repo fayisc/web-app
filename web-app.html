@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="web-app.css">
+   <title>Watch Later</title>
+   <style>
+      /* Basic styles for the form */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      /* Styles for the link card */
+      .link-card {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Add to Watch Later</h1>
+    <form>
+      <label for="video-link">Enter video link:</label>
+      <input type="text" id="video-link" name="video-link" placeholder="https://www.youtube.com/watch?v=...">
+      <input type="submit" value="Add to Watch Later">
+    </form>
+<div >
+    
+    <div id="link-list" >
+        
+
+    </div>
+</div>
+    
+    <!-- <script>
+      const form = document.querySelector('form');
+      const linkList = document.querySelector('#link-list');
+      const API_KEY = "AIzaSyBsjEut9or5HdBM5c3zz47iwijZiwn5Yn4";
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const linkInput = document.querySelector('#video-link');
+        const link = linkInput.value.trim();
+        if (link !== '') {
+          const videoId = link.split('v=')[1];
+          const ampersandPosition = videoId.indexOf('&');
+          if (ampersandPosition !== -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+          }
+          fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${API_KEY}`)
+            .then(response => response.json())
+            .then(data => {
+              const title = data.items[0].snippet.title;
+              const linkCard = document.createElement('div');
+              linkCard.classList.add('link-card');
+              const linkTitle = document.createElement('h2');
+              linkTitle.textContent = title;
+              const linkUrl = document.createElement('p');
+              linkUrl.textContent = link;
+              linkCard.appendChild(linkTitle);
+              linkCard.appendChild(linkUrl);
+              linkList.appendChild(linkCard);
+              linkInput.value = '';
+            })
+            .catch(error => console.error(error));
+        }
+      });
+    </script> -->
+
+
+    <script>
+        const API_KEY = "AIzaSyBsjEut9or5HdBM5c3zz47iwijZiwn5Yn4";
+        
+        const fetchVideoInfo = (videoId) => {
+          return fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails&key=${API_KEY}`)
+            .then(response => response.json());
+        };
+        
+        const addVideoToList = (link) => {
+          const videoId = getVideoIdFromLink(link);
+          fetchVideoInfo(videoId)
+            .then(data => {
+              const title = data.items[0].snippet.title;
+              const thumbnailUrl = data.items[0].snippet.thumbnails.high.url;
+              const linkCard = createLinkCard(title, thumbnailUrl, link);
+              const linkList = document.querySelector('#link-list');
+              linkList.appendChild(linkCard);
+            })
+            .catch(error => console.error(error));
+        };
+        
+        const createLinkCard = (title, thumbnailUrl, link) => {
+          const linkCard = document.createElement('div');
+          linkCard.classList.add('link-card');
+          const thumbnail = document.createElement('img');
+          thumbnail.src = thumbnailUrl;
+          thumbnail.width = 200;
+          thumbnail.height = 150;
+          const linkTitle = document.createElement('h2');
+          linkTitle.textContent = title;
+          const linkUrl = document.createElement('p');
+          linkUrl.textContent = link;
+          linkCard.appendChild(thumbnail);
+          linkCard.appendChild(linkTitle);
+          linkCard.appendChild(linkUrl);
+          return linkCard;
+        };
+        
+        const getVideoIdFromLink = (link) => {
+          const videoId = link.split('v=')[1];
+          const ampersandPosition = videoId.indexOf('&');
+          if (ampersandPosition !== -1) {
+            return videoId.substring(0, ampersandPosition);
+          }
+          return videoId;
+        };
+        
+        const form = document.querySelector('form');
+        const linkList = document.querySelector('#link-list');
+        
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const linkInput = document.querySelector('#video-link');
+          const link = linkInput.value.trim();
+          if (link !== '') {
+            addVideoToList(link);
+            linkInput.value = '';
+          }
+        });
+      </script>
+      
+    <script src="web-app.js"></script>
+  </body>
+</html>
