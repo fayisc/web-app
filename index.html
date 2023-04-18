@@ -25,7 +25,7 @@
       }
 
       input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #4a4747;
         color: white;
         padding: 12px 20px;
         border: none;
@@ -34,21 +34,30 @@
       }
 
       input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #5beb5b;
       }
 
       /* Styles for the link card */
       .link-card {
-        background-color: #f2f2f2;
+        background-color: #ffffff;
         padding: 10px;
         margin-bottom: 10px;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
+      @media only screen and (max-width: 600px) {
+        form {
+          width: 90%;
+        }
+
+        input[type="text"], input[type="submit"] {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1>Add to Watch Later</h1>
+    <h1> Watch Later</h1>
     <form>
       <label for="video-link">Enter video link:</label>
       <input type="text" id="video-link" name="video-link" placeholder="https://www.youtube.com/watch?v=...">
@@ -120,21 +129,23 @@
         };
         
         const createLinkCard = (title, thumbnailUrl, link) => {
-          const linkCard = document.createElement('div');
-          linkCard.classList.add('link-card');
-          const thumbnail = document.createElement('img');
-          thumbnail.src = thumbnailUrl;
-          thumbnail.width = 200;
-          thumbnail.height = 150;
-          const linkTitle = document.createElement('h2');
-          linkTitle.textContent = title;
-          const linkUrl = document.createElement('p');
-          linkUrl.textContent = link;
-          linkCard.appendChild(thumbnail);
-          linkCard.appendChild(linkTitle);
-          linkCard.appendChild(linkUrl);
-          return linkCard;
-        };
+  const linkCard = document.createElement('div');
+  linkCard.classList.add('link-card');
+  const thumbnail = document.createElement('img');
+  thumbnail.src = thumbnailUrl;
+  thumbnail.width = 100;
+  thumbnail.height = 75;
+  const linkTitle = document.createElement('h2');
+  linkTitle.textContent = title;
+  const linkUrl = document.createElement('a');
+  linkUrl.href = link;
+  linkUrl.textContent = link;
+  linkCard.appendChild(thumbnail);
+  linkCard.appendChild(linkTitle);
+  linkCard.appendChild(linkUrl);
+  return linkCard;
+};
+
         
         const getVideoIdFromLink = (link) => {
           const videoId = link.split('v=')[1];
