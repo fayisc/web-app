@@ -32,7 +32,17 @@ form {
   }
   
   #link-list{
-    width: 15vw;
-     height: 10vw;
+    background-color: #eaebea;
+    width: 99vw;
+    height: 500px;
 
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+
+  }
+  #video-link{
+    height: 20px;
+    width: 350px;
   }
